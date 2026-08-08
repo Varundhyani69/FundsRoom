@@ -310,9 +310,22 @@ The Login request auto-saves the JWT token to a collection variable, so all subs
 
 ---
 
-## Known Limitations
+## Known Limitations & Assumptions
 
-- No invoice PDF export (planned — would use puppeteer or pdfkit)
-- No product image upload
-- No password reset flow
-- No pagination on dashboard widgets (intentionally limited to recent 5-8 records)
+### JavaScript instead of TypeScript
+The backend is written in JavaScript rather than TypeScript. The core reason is pragmatic — the business logic in this project (DB transactions, stock deduction, role guards) is where the real complexity lies, and JavaScript allowed faster iteration on getting that logic right within the time constraint. The architecture is structured the same way TypeScript would be: separate modules, clear separation of controllers and routes, consistent error handling, and validated inputs on every endpoint using express-validator. Migrating to TypeScript would be a matter of adding type definitions and tsconfig — the structure already supports it.
+
+### PDF export not implemented
+Invoice/challan export as PDF is listed as a bonus feature. The challan detail page includes a fully functional browser print view (Ctrl+P or the Print button) which produces a clean printable layout with proper CSS print styles. A proper server-generated PDF using pdfkit or puppeteer was not implemented within the time available but the endpoint structure (`GET /challans/:id/pdf`) is straightforward to add on top of the existing challan detail API.
+
+### Product image upload not implemented
+AWS S3 image upload for products is a bonus feature that was not implemented. The product schema and API are ready to accept an `image_url` field — the missing piece is the S3 upload middleware (multer + aws-sdk), which can be added without changing any existing logic.
+
+### GitHub Actions CI/CD not set up
+Automated deployment via GitHub Actions is a bonus feature. Deployment is currently done manually via `git pull` + `docker compose up` on EC2, which is reliable and straightforward for a project of this size. A Actions workflow for auto-deploy on push to main would be the natural next step.
+
+### No password reset flow
+Users cannot reset their own passwords. An admin can create new accounts via `POST /auth/register`. This was a deliberate scope decision — the system is used by internal employees whose accounts are managed by the admin.
+
+### Dashboard widgets not paginated
+The recent challans, low stock, and upcoming follow-ups widgets on the dashboard are intentionally limited to 5-8 records each. Full pagination on widgets would add complexity without meaningful value for an internal operations dashboard where users can navigate to the dedicated list pages for complete data.
