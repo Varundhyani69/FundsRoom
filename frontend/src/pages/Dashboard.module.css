@@ -1,0 +1,52 @@
+.page {
+    max-width: 900px;
+}
+
+.heading {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.sub {
+    color: #6b7280;
+    margin-top: 0.35rem;
+    font-size: 0.95rem;
+}
+
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-top: 2rem;
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.cardIcon {
+    font-size: 2rem;
+    margin-bottom: 0.75rem;
+}
+
+.cardLabel {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.cardHint {
+    font-size: 0.8rem;
+    color: #9ca3af;
+    margin-top: 0.25rem;
+}

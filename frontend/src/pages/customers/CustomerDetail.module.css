@@ -1,0 +1,227 @@
+.page {
+    max-width: 1100px;
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.headerRight {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.headerRight h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.back {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.back:hover {
+    color: #1a1a2e;
+}
+
+.editBtn {
+    background: #f1f5f9;
+    color: #475569;
+    border: none;
+    border-radius: 7px;
+    padding: 0.4rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.editBtn:hover {
+    background: #e2e8f0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+@media (max-width: 860px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+.cardTitle {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.2rem;
+}
+
+.infoGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.infoRow {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.infoLabel {
+    width: 100px;
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    color: #9ca3af;
+    font-weight: 500;
+    padding-top: 0.05rem;
+}
+
+.infoValue {
+    font-size: 0.9rem;
+    color: #1a1a2e;
+    font-weight: 500;
+}
+
+/* Follow-up form */
+.noteForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+}
+
+.noteInput {
+    width: 100%;
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+    resize: vertical;
+    outline: none;
+    font-family: inherit;
+}
+
+.noteInput:focus {
+    border-color: #1a1a2e;
+}
+
+.noteFooter {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+}
+
+.field label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #374151;
+}
+
+.dateInput {
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.55rem 0.8rem;
+    font-size: 0.875rem;
+    outline: none;
+}
+
+.noteBtn {
+    background: #1a1a2e;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.noteBtn:hover:not(:disabled) {
+    background: #0f3460;
+}
+
+.noteBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Timeline */
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.timelineItem {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.timelineDot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3b82f6;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+}
+
+.timelineContent {
+    flex: 1;
+}
+
+.timelineNote {
+    font-size: 0.9rem;
+    color: #1a1a2e;
+    line-height: 1.5;
+}
+
+.timelineMeta {
+    font-size: 0.77rem;
+    color: #9ca3af;
+    margin-top: 0.3rem;
+    display: flex;
+    gap: 0.4rem;
+    flex-wrap: wrap;
+}
+
+.empty {
+    color: #9ca3af;
+    font-size: 0.875rem;
+    padding: 0.5rem 0;
+}
+
+.loading {
+    padding: 3rem;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.followupSection {
+    display: flex;
+    flex-direction: column;
+}
