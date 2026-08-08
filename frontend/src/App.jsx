@@ -10,6 +10,9 @@ import ProductList from "./pages/products/ProductList";
 import ProductForm from "./pages/products/ProductForm";
 import ProductDetail from "./pages/products/ProductDetail";
 import StockMovements from "./pages/products/StockMovements";
+import ChallanList from "./pages/challans/ChallanList";
+import ChallanCreate from "./pages/challans/ChallanCreate";
+import ChallanDetail from "./pages/challans/ChallanDetail";
 
 export default function App() {
   return (
@@ -34,6 +37,11 @@ export default function App() {
         <Route path="/products/:id" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
         <Route path="/products/:id/edit" element={<ProtectedRoute roles={["admin", "warehouse"]}><ProductForm /></ProtectedRoute>} />
         <Route path="/stock-movements" element={<ProtectedRoute><StockMovements /></ProtectedRoute>} />
+
+        {/* Sales Challans */}
+        <Route path="/challans" element={<ProtectedRoute><ChallanList /></ProtectedRoute>} />
+        <Route path="/challans/new" element={<ProtectedRoute roles={["admin", "sales"]}><ChallanCreate /></ProtectedRoute>} />
+        <Route path="/challans/:id" element={<ProtectedRoute><ChallanDetail /></ProtectedRoute>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -1,0 +1,281 @@
+.page {
+    max-width: 960px;
+}
+
+.topBar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.back {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.9rem;
+    padding: 0;
+}
+
+.back:hover {
+    color: #1a1a2e;
+}
+
+.topActions {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+}
+
+.printBtn {
+    background: #f1f5f9;
+    color: #475569;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+}
+
+.printBtn:hover {
+    background: #e2e8f0;
+}
+
+.confirmBtn {
+    background: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.confirmBtn:hover:not(:disabled) {
+    background: #15803d;
+}
+
+.confirmBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.cancelBtn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.cancelBtn:hover:not(:disabled) {
+    background: #fecaca;
+}
+
+.cancelBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Challan document */
+.challanDoc {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+}
+
+.docHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #1a1a2e;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.companyName {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #1a1a2e;
+}
+
+.companyTagline {
+    font-size: 0.8rem;
+    color: #6b7280;
+    margin-top: 0.2rem;
+}
+
+.challanMeta {
+    text-align: right;
+}
+
+.challanTitle {
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.6rem;
+}
+
+.metaRow {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+    margin-top: 0.3rem;
+}
+
+.metaLabel {
+    font-size: 0.78rem;
+    color: #9ca3af;
+    width: 80px;
+    text-align: right;
+}
+
+.metaValue {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+/* Info strip */
+.infoStrip {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.infoBlock {
+    font-size: 0.875rem;
+    color: #374151;
+    line-height: 1.7;
+}
+
+.infoBlockTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.35rem;
+}
+
+.infoBlockMain {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+.infoSmall {
+    font-size: 0.8rem;
+    color: #9ca3af;
+}
+
+/* Items table */
+.itemsTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+}
+
+.itemsTable th {
+    background: #f8fafc;
+    padding: 0.65rem 0.85rem;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-top: 1px solid #e5e7eb;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.itemsTable td {
+    padding: 0.75rem 0.85rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #374151;
+}
+
+.itemName {
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.itemSku {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.itemQty {
+    font-weight: 700;
+    text-align: center;
+}
+
+.itemTotal {
+    font-weight: 600;
+    text-align: right;
+}
+
+.itemsTable tfoot td {
+    border-top: 2px solid #1a1a2e;
+    border-bottom: none;
+    padding-top: 0.85rem;
+}
+
+.footLabel {
+    font-weight: 700;
+    color: #1a1a2e;
+    font-size: 0.95rem;
+    text-align: right;
+}
+
+.footQty {
+    font-weight: 800;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.footTotal {
+    font-weight: 800;
+    font-size: 1rem;
+    color: #1a1a2e;
+    text-align: right;
+}
+
+.docFooter {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 1rem;
+    font-size: 0.78rem;
+    color: #9ca3af;
+    text-align: center;
+}
+
+.loading {
+    padding: 3rem;
+    text-align: center;
+    color: #9ca3af;
+}
+
+/* Print styles */
+@media print {
+    .topBar {
+        display: none !important;
+    }
+
+    .challanDoc {
+        box-shadow: none;
+        padding: 0;
+        border-radius: 0;
+    }
+}
