@@ -1,0 +1,177 @@
+.page {
+    max-width: 1100px;
+}
+
+.header {
+    margin-bottom: 1.5rem;
+}
+
+.header h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin-top: 0.4rem;
+}
+
+.back {
+    background: none;
+    border: none;
+    color: #6b7280;
+    font-size: 0.875rem;
+    padding: 0;
+}
+
+.back:hover {
+    color: #1a1a2e;
+}
+
+.filterNote {
+    font-size: 0.82rem;
+    color: #3b82f6;
+    margin-top: 0.2rem;
+}
+
+.filters {
+    margin-bottom: 1.2rem;
+}
+
+.select {
+    border: 1.5px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.875rem;
+    outline: none;
+    background: #fff;
+}
+
+.tableWrap {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+}
+
+.table th {
+    background: #f8fafc;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table td {
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    color: #374151;
+    vertical-align: middle;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.table tr:hover td {
+    background: #f9fafb;
+}
+
+.date {
+    font-size: 0.8rem;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+.productName {
+    font-weight: 600;
+    color: #1d4ed8;
+    cursor: pointer;
+}
+
+.productName:hover {
+    text-decoration: underline;
+}
+
+.sku {
+    font-family: monospace;
+    font-size: 0.8rem;
+    color: #6b7280;
+}
+
+.typeBadge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.typeIn {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.typeOut {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.qty {
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.qtyIn {
+    color: #15803d;
+}
+
+.qtyOut {
+    color: #dc2626;
+}
+
+.reason {
+    font-size: 0.85rem;
+    color: #374151;
+}
+
+.loading,
+.empty {
+    padding: 3rem;
+    text-align: center;
+    color: #9ca3af;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    padding: 1.2rem 0 0.5rem;
+    font-size: 0.875rem;
+    color: #6b7280;
+}
+
+.pageBtn {
+    background: #fff;
+    border: 1.5px solid #d1d5db;
+    border-radius: 6px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.875rem;
+}
+
+.pageBtn:hover:not(:disabled) {
+    border-color: #1a1a2e;
+}
+
+.pageBtn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}

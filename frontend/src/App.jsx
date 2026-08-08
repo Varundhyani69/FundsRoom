@@ -6,6 +6,10 @@ import Dashboard from "./pages/Dashboard";
 import CustomerList from "./pages/customers/CustomerList";
 import CustomerForm from "./pages/customers/CustomerForm";
 import CustomerDetail from "./pages/customers/CustomerDetail";
+import ProductList from "./pages/products/ProductList";
+import ProductForm from "./pages/products/ProductForm";
+import ProductDetail from "./pages/products/ProductDetail";
+import StockMovements from "./pages/products/StockMovements";
 
 export default function App() {
   return (
@@ -23,6 +27,13 @@ export default function App() {
         <Route path="/customers/new" element={<ProtectedRoute roles={["admin", "sales"]}><CustomerForm /></ProtectedRoute>} />
         <Route path="/customers/:id" element={<ProtectedRoute><CustomerDetail /></ProtectedRoute>} />
         <Route path="/customers/:id/edit" element={<ProtectedRoute roles={["admin", "sales"]}><CustomerForm /></ProtectedRoute>} />
+
+        {/* Products & Inventory */}
+        <Route path="/products" element={<ProtectedRoute><ProductList /></ProtectedRoute>} />
+        <Route path="/products/new" element={<ProtectedRoute roles={["admin", "warehouse"]}><ProductForm /></ProtectedRoute>} />
+        <Route path="/products/:id" element={<ProtectedRoute><ProductDetail /></ProtectedRoute>} />
+        <Route path="/products/:id/edit" element={<ProtectedRoute roles={["admin", "warehouse"]}><ProductForm /></ProtectedRoute>} />
+        <Route path="/stock-movements" element={<ProtectedRoute><StockMovements /></ProtectedRoute>} />
 
         {/* Fallback */}
         <Route path="*" element={<Navigate to="/dashboard" replace />} />

@@ -4,6 +4,8 @@ require("dotenv").config();
 
 const authRoutes = require("./modules/auth/auth.routes");
 const customerRoutes = require("./modules/customers/customer.routes");
+const productRoutes = require("./modules/products/product.routes");
+const stockMovementRoutes = require("./modules/products/stockMovement.routes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -21,6 +23,8 @@ app.get("/health", (req, res) => {
 // ── Routes ────────────────────────────────────────────────────
 app.use("/auth", authRoutes);
 app.use("/customers", customerRoutes);
+app.use("/products", productRoutes);
+app.use("/stock-movements", stockMovementRoutes);
 
 // ── 404 handler ──────────────────────────────────────────────
 app.use((req, res) => {
