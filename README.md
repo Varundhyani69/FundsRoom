@@ -1,18 +1,20 @@
 # Mini ERP + CRM Operations Portal
 
-A full-stack ERP/CRM system built for a wholesale/distribution company. Handles customers, products, stock, sales challans, and basic CRM follow-ups.
+A full-stack internal operations portal built for a wholesale/distribution company. Covers customer CRM, product inventory, stock tracking, and sales challan management.
 
 ---
 
 ## Tech Stack
 
-| Layer      | Technology                          |
-|------------|-------------------------------------|
-| Backend    | Node.js, Express.js, JavaScript     |
-| Database   | MySQL                               |
-| Auth       | JWT (JSON Web Tokens)               |
-| Frontend   | React, JavaScript, CSS Modules      |
-| Deployment | Render (backend), Vercel (frontend) |
+| Layer      | Technology                              |
+|------------|-----------------------------------------|
+| Backend    | Node.js 22, Express.js, JavaScript      |
+| Database   | MySQL 8                                 |
+| Auth       | JWT (JSON Web Tokens), bcryptjs         |
+| Frontend   | React 18, JavaScript, CSS Modules       |
+| Bundler    | Vite 8                                  |
+| Containers | Docker + Docker Compose                 |
+| Deployment | Render (backend) · Vercel (frontend)    |
 
 ---
 
@@ -20,32 +22,57 @@ A full-stack ERP/CRM system built for a wholesale/distribution company. Handles 
 
 ```
 /
-├── backend/          Express API server
+├── backend/
 │   ├── src/
-│   │   ├── db/       DB connection, schema SQL, seed script
-│   │   ├── middleware/  JWT auth, role guard, error handler
-│   │   └── modules/  Feature modules (auth, customers, products, challans)
+│   │   ├── db/
+│   │   │   ├── connection.js       MySQL connection pool
+│   │   │   ├── schema.sql          Full DB schema (all tables)
+│   │   │   ├── migrate.js          Run schema via Node.js
+│   │   │   └── seed.js             Seed test data + users
+│   │   ├── middleware/
+│   │   │   ├── authenticate.js     JWT verification
+│   │   │   ├── authorize.js        Role-based access guard
+│   │   │   └── errorHandler.js     Global error handler
+│   │   ├── modules/
+│   │   │   ├── auth/               Login, register, get me
+│   │   │   ├── customers/          CRM - CRUD, follow-ups
+│   │   │   ├── products/           Inventory - CRUD, stock adjust
+│   │   │   ├── challans/           Sales challans with stock logic
+│   │   │   └── dashboard/          Aggregated stats API
+│   │   ├── app.js                  Express app setup
+│   │   └── index.js                Server entry point
 │   ├── .env.example
+│   ├── Dockerfile
 │   └── package.json
 │
-├── frontend/         React SPA
+├── frontend/
 │   ├── src/
-│   │   ├── api/      Axios instance with interceptors
-│   │   ├── pages/    One folder per page
-│   │   └── components/  Shared UI components
+│   │   ├── api/                    Axios wrappers per module
+│   │   ├── components/             Layout, Sidebar, Badge, ProtectedRoute
+│   │   └── pages/
+│   │       ├── Login.jsx
+│   │       ├── Dashboard.jsx
+│   │       ├── customers/          List, Form, Detail
+│   │       ├── products/           List, Form, Detail, StockMovements
+│   │       └── challans/           List, Create, Detail
 │   ├── .env.example
+│   ├── Dockerfile
+│   ├── nginx.conf
 │   └── package.json
 │
+├── postman/
+│   └── erp-crm.postman_collection.json
+├── docker-compose.yml
 └── README.md
 ```
 
 ---
 
-## Local Setup
+## Local Setup (without Docker)
 
 ### Prerequisites
 - Node.js v18+
-- MySQL 8+ running locally
+- MySQL 8 running locally
 
 ### 1. Clone the repo
 
@@ -54,35 +81,48 @@ git clone <your-repo-url>
 cd erp-crm-portal
 ```
 
-### 2. Set up the database
-
-Open MySQL and run:
-
-```sql
-source backend/src/db/schema.sql
-```
-
-Or import it via MySQL Workbench / TablePlus / DBeaver.
-
-### 3. Backend
+### 2. Backend
 
 ```bash
 cd backend
 cp .env.example .env
-# Edit .env with your MySQL credentials and a strong JWT_SECRET
+# Edit .env — fill in your MySQL credentials
 npm install
-npm run seed     # creates test users for all 4 roles
-npm run dev      # starts on http://localhost:5000
+node src/db/migrate.js   # creates DB + all tables
+npm run seed             # seeds test users + mock data
+npm run dev              # starts on http://localhost:5000
 ```
 
-### 4. Frontend
+### 3. Frontend
 
 ```bash
 cd frontend
 cp .env.example .env
-# VITE_API_URL should point to your backend (default: http://localhost:5000)
+# VITE_API_URL=http://localhost:5000
 npm install
-npm run dev      # starts on http://localhost:3000
+npm run dev              # starts on http://localhost:3000
+```
+
+---
+
+## Local Setup (with Docker)
+
+Requires Docker Desktop installed and running.
+
+```bash
+# From repo root
+docker-compose up --build
+```
+
+This starts:
+- MySQL on port 3307
+- Backend API on port 5000
+- Frontend on port 3000
+
+Then seed the data:
+
+```bash
+docker exec erp_backend node src/db/seed.js
 ```
 
 ---
@@ -102,99 +142,147 @@ npm run dev      # starts on http://localhost:3000
 
 ### Backend (`backend/.env`)
 
-| Variable       | Description                        |
-|----------------|------------------------------------|
-| PORT           | Server port (default 5000)         |
-| DB_HOST        | MySQL host                         |
-| DB_PORT        | MySQL port (default 3306)          |
-| DB_USER        | MySQL username                     |
-| DB_PASSWORD    | MySQL password                     |
-| DB_NAME        | Database name                      |
-| JWT_SECRET     | Secret key for signing JWTs        |
-| JWT_EXPIRES_IN | Token expiry (e.g. 7d)             |
-| NODE_ENV       | development / production           |
+| Variable        | Description                          | Default       |
+|-----------------|--------------------------------------|---------------|
+| PORT            | Server port                          | 5000          |
+| DB_HOST         | MySQL host                           | localhost     |
+| DB_PORT         | MySQL port                           | 3306          |
+| DB_USER         | MySQL username                       | root          |
+| DB_PASSWORD     | MySQL password                       | —             |
+| DB_NAME         | Database name                        | erp_crm_db    |
+| JWT_SECRET      | Secret key for signing JWTs          | —             |
+| JWT_EXPIRES_IN  | Token expiry duration                | 7d            |
+| NODE_ENV        | Environment                          | development   |
 
 ### Frontend (`frontend/.env`)
 
-| Variable      | Description                        |
-|---------------|------------------------------------|
-| VITE_API_URL  | Backend API base URL               |
+| Variable       | Description                           |
+|----------------|---------------------------------------|
+| VITE_API_URL   | Backend base URL                      |
 
 ---
 
-## API Overview
+## API Reference
 
-| Method | Endpoint              | Access       | Description              |
-|--------|-----------------------|--------------|--------------------------|
-| POST   | /auth/login           | Public       | Login and get JWT        |
-| GET    | /auth/me              | Authenticated| Get current user info    |
-| POST   | /auth/register        | Admin only   | Create a new employee    |
-| GET    | /customers            | All roles    | List / search customers  |
-| POST   | /customers            | Sales, Admin | Add customer             |
-| PUT    | /customers/:id        | Sales, Admin | Edit customer            |
-| GET    | /customers/:id        | All roles    | Customer detail          |
-| POST   | /customers/:id/followups | Sales, Admin | Add follow-up note    |
-| GET    | /products             | All roles    | List products            |
-| POST   | /products             | Admin, Warehouse | Add product          |
-| PUT    | /products/:id         | Admin, Warehouse | Edit product         |
-| GET    | /stock-movements      | All roles    | Stock movement log       |
-| POST   | /challans             | Sales, Admin | Create challan           |
-| PUT    | /challans/:id/confirm | Sales, Admin | Confirm challan          |
-| GET    | /challans             | All roles    | List challans            |
+All protected routes require: `Authorization: Bearer <token>`
 
-Full Postman collection is included in `/postman/erp-crm.postman_collection.json`.
+### Auth
+| Method | Endpoint          | Access       | Description              |
+|--------|-------------------|--------------|--------------------------|
+| POST   | /auth/login       | Public       | Login, returns JWT       |
+| GET    | /auth/me          | All          | Current user info        |
+| POST   | /auth/register    | Admin        | Create new employee      |
+
+### Dashboard
+| Method | Endpoint             | Access | Description               |
+|--------|----------------------|--------|---------------------------|
+| GET    | /dashboard/stats     | All    | Aggregated system stats   |
+
+### Customers
+| Method | Endpoint                    | Access        | Description             |
+|--------|-----------------------------|---------------|-------------------------|
+| GET    | /customers                  | All           | List with search/filter |
+| GET    | /customers/:id              | All           | Customer detail         |
+| POST   | /customers                  | Admin, Sales  | Create customer         |
+| PUT    | /customers/:id              | Admin, Sales  | Update customer         |
+| POST   | /customers/:id/followups    | Admin, Sales  | Add follow-up note      |
+
+### Products
+| Method | Endpoint                        | Access            | Description           |
+|--------|---------------------------------|-------------------|-----------------------|
+| GET    | /products                       | All               | List with filters     |
+| GET    | /products/:id                   | All               | Product + movements   |
+| POST   | /products                       | Admin, Warehouse  | Create product        |
+| PUT    | /products/:id                   | Admin, Warehouse  | Update product        |
+| POST   | /products/:id/stock-adjust      | Admin, Warehouse  | Manual stock IN/OUT   |
+| GET    | /stock-movements                | All               | Full movement log     |
+
+### Challans
+| Method | Endpoint                | Access       | Description                     |
+|--------|-------------------------|--------------|----------------------------------|
+| GET    | /challans               | All          | List with filters                |
+| GET    | /challans/:id           | All          | Challan detail with line items   |
+| POST   | /challans               | Admin, Sales | Create draft or confirmed        |
+| PUT    | /challans/:id/confirm   | Admin, Sales | Confirm draft — deducts stock    |
+| PUT    | /challans/:id/cancel    | Admin, Sales | Cancel — restores stock if needed|
 
 ---
 
 ## Architecture
 
 ```
-Client (React SPA)
-      │
-      │  HTTP/REST (JSON)
-      ▼
-Express.js API Server
-      │
-      ├── JWT middleware (authenticate)
-      ├── Role guard (authorize)
-      │
-      ├── /auth        → auth module
-      ├── /customers   → CRM module
-      ├── /products    → Inventory module
-      └── /challans    → Sales module
-            │
-            ▼
-         MySQL Database
+React SPA (Vite)
+     │
+     │  REST / JSON over HTTP
+     ▼
+Express.js API
+     │
+     ├── authenticate middleware  (JWT verification)
+     ├── authorize middleware     (role guard)
+     │
+     ├── /auth          → auth module
+     ├── /dashboard     → stats module
+     ├── /customers     → CRM module
+     ├── /products      → inventory module
+     ├── /stock-movements
+     └── /challans      → sales module
+               │
+               ▼
+          MySQL 8 Database
 ```
 
-- Each feature lives in its own module folder with controller + routes files.
-- JWT is stateless — no session store needed.
-- Stock deduction happens inside a DB transaction when a challan is confirmed.
-- Challan items store a product snapshot (name, SKU, price at time of sale) so historical data stays intact even if the product is later edited.
+Key design decisions:
+- JWT is stateless — no session store
+- Challan confirmation runs inside a DB transaction — all stock checks happen before any deduction, so it either fully succeeds or fully fails
+- Challan line items store a product snapshot (name, SKU, price at time of sale) so historical records stay accurate even when products are edited later
+- Cancelling a confirmed challan automatically reverses all stock movements
+- Each module follows a controller + routes separation for clarity
 
 ---
 
 ## Deployment
 
-### Backend → Render
-1. Push to GitHub.
-2. Create a new Web Service on Render, point to the `backend` folder.
-3. Set all env variables from `.env.example` in Render dashboard.
-4. Build command: `npm install` | Start command: `node src/index.js`
+### Backend on Render
+1. Push to GitHub
+2. Create a new Web Service, set root to `backend`
+3. Build command: `npm install`
+4. Start command: `node src/index.js`
+5. Add all env variables from `.env.example` in the Render dashboard
 
-### Frontend → Vercel
-1. Import repo on Vercel, set root directory to `frontend`.
-2. Set `VITE_API_URL` to your Render backend URL.
-3. Build command: `npm run build` | Output: `dist`
+### Frontend on Vercel
+1. Import the repo, set root directory to `frontend`
+2. Add env variable: `VITE_API_URL=<your render backend url>`
+3. Build command: `npm run build` — output dir: `dist`
 
-### Database → Neon / PlanetScale / Render Postgres
-- Create a free MySQL-compatible DB, get the connection string, update backend env vars.
+### Database
+Use any free MySQL-compatible service:
+- [PlanetScale](https://planetscale.com) (MySQL-compatible)
+- [Railway](https://railway.app) (MySQL)
+- [Clever Cloud](https://clever-cloud.com) (MySQL)
+
+---
+
+## Postman Collection
+
+Import `postman/erp-crm.postman_collection.json` into Postman.
+
+The Login request auto-saves the JWT token to a collection variable, so all subsequent requests are authenticated automatically.
+
+---
+
+## Bonus Features Implemented
+
+- Docker + Docker Compose setup for one-command local dev
+- Browser print support on challan detail page
+- Low stock alert on dashboard and product list
+- Upcoming follow-ups widget on dashboard
+- Stock cancellation reversal (confirmed challan cancel restores stock)
 
 ---
 
 ## Known Limitations
 
-- No invoice PDF export yet (bonus feature, planned).
-- No product image upload (bonus feature, planned).
-- Password reset flow not implemented.
-- No pagination on stock movement log (can be added if data grows).
+- No invoice PDF export (planned — would use puppeteer or pdfkit)
+- No product image upload
+- No password reset flow
+- No pagination on dashboard widgets (intentionally limited to recent 5-8 records)

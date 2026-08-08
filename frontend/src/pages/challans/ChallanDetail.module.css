@@ -6,9 +6,9 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
     flex-wrap: wrap;
     gap: 0.75rem;
+    margin-bottom: 1.5rem;
 }
 
 .back {
@@ -36,6 +36,7 @@
     border-radius: 8px;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    white-space: nowrap;
 }
 
 .printBtn:hover {
@@ -50,6 +51,7 @@
     padding: 0.5rem 1.1rem;
     font-size: 0.875rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .confirmBtn:hover:not(:disabled) {
@@ -69,6 +71,7 @@
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .cancelBtn:hover:not(:disabled) {
@@ -180,11 +183,17 @@
 }
 
 /* Items table */
+.tableWrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-bottom: 1.5rem;
+}
+
 .itemsTable {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.875rem;
-    margin-bottom: 1.5rem;
+    min-width: 480px;
 }
 
 .itemsTable th {
@@ -198,6 +207,7 @@
     letter-spacing: 0.04em;
     border-top: 1px solid #e5e7eb;
     border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
 }
 
 .itemsTable td {
@@ -267,7 +277,36 @@
     color: #9ca3af;
 }
 
-/* Print styles */
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 640px) {
+    .challanDoc {
+        padding: 1.2rem;
+    }
+
+    .infoStrip {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .challanMeta {
+        text-align: left;
+    }
+
+    .metaRow {
+        justify-content: flex-start;
+    }
+
+    .topActions {
+        width: 100%;
+    }
+
+    .topActions button {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+/* ── Print styles ──────────────────────────────────── */
 @media print {
     .topBar {
         display: none !important;

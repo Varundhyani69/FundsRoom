@@ -101,3 +101,20 @@
     color: #9ca3af;
     margin-top: 1.2rem;
 }
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 480px) {
+    .card {
+        padding: 2rem 1.3rem;
+        border-radius: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .page {
+        padding: 0;
+        align-items: stretch;
+    }
+}

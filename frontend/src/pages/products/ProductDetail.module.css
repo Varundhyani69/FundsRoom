@@ -48,6 +48,7 @@
     display: flex;
     gap: 0.6rem;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .adjustBtn {
@@ -58,6 +59,7 @@
     padding: 0.5rem 1.1rem;
     font-size: 0.875rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .adjustBtn:hover {
@@ -71,6 +73,7 @@
     border-radius: 8px;
     padding: 0.5rem 1rem;
     font-size: 0.875rem;
+    white-space: nowrap;
 }
 
 .editBtn:hover {
@@ -82,12 +85,6 @@
     grid-template-columns: 1fr 1.6fr;
     gap: 1.5rem;
     align-items: start;
-}
-
-@media (max-width: 820px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .card {
@@ -130,6 +127,7 @@
     font-size: 0.9rem;
     color: #1a1a2e;
     font-weight: 500;
+    word-break: break-word;
 }
 
 .stockBlock {
@@ -168,7 +166,6 @@
     border-radius: 8px;
 }
 
-/* Movements */
 .movHeader {
     display: flex;
     align-items: center;
@@ -223,6 +220,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
+    min-width: 0;
 }
 
 .movQty {
@@ -234,6 +232,9 @@
 .movReason {
     font-size: 0.78rem;
     color: #6b7280;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .movMeta {
@@ -243,6 +244,7 @@
     font-size: 0.75rem;
     color: #9ca3af;
     gap: 0.1rem;
+    flex-shrink: 0;
 }
 
 .empty {
@@ -347,6 +349,7 @@
     padding: 0.6rem 0.85rem;
     font-size: 0.9rem;
     outline: none;
+    width: 100%;
 }
 
 .modalInput:focus {
@@ -396,4 +399,33 @@
 
 .confirmOut:hover:not(:disabled) {
     background: #b91c1c;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 820px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 540px) {
+    .card {
+        padding: 1.1rem;
+    }
+
+    .headerRight h1 {
+        font-size: 1.2rem;
+    }
+
+    .stockNum {
+        font-size: 2.2rem;
+    }
+
+    .modal {
+        padding: 1.4rem;
+    }
+
+    .modalActions {
+        flex-direction: column;
+    }
 }

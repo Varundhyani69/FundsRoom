@@ -142,41 +142,43 @@ export default function ChallanDetail() {
                     </div>
 
                     {/* Line items */}
-                    <table className={styles.itemsTable}>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Product</th>
-                                <th>SKU</th>
-                                <th>Unit Price</th>
-                                <th>Quantity</th>
-                                <th>Line Total</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {challan.items?.map((item, i) => (
-                                <tr key={item.id}>
-                                    <td>{i + 1}</td>
-                                    <td className={styles.itemName}>{item.product_name}</td>
-                                    <td className={styles.itemSku}>{item.product_sku}</td>
-                                    <td>₹{parseFloat(item.unit_price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
-                                    <td className={styles.itemQty}>{item.quantity}</td>
-                                    <td className={styles.itemTotal}>
-                                        ₹{parseFloat(item.line_total).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                    <div className={styles.tableWrap}>
+                        <table className={styles.itemsTable}>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Product</th>
+                                    <th>SKU</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Line Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {challan.items?.map((item, i) => (
+                                    <tr key={item.id}>
+                                        <td>{i + 1}</td>
+                                        <td className={styles.itemName}>{item.product_name}</td>
+                                        <td className={styles.itemSku}>{item.product_sku}</td>
+                                        <td>₹{parseFloat(item.unit_price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+                                        <td className={styles.itemQty}>{item.quantity}</td>
+                                        <td className={styles.itemTotal}>
+                                            ₹{parseFloat(item.line_total).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan={4} className={styles.footLabel}>Total</td>
+                                    <td className={styles.footQty}>{challan.total_quantity}</td>
+                                    <td className={styles.footTotal}>
+                                        ₹{parseFloat(challan.total_amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
                                     </td>
                                 </tr>
-                            ))}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan={4} className={styles.footLabel}>Total</td>
-                                <td className={styles.footQty}>{challan.total_quantity}</td>
-                                <td className={styles.footTotal}>
-                                    ₹{parseFloat(challan.total_amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </tfoot>
+                        </table>
+                    </div>
 
                     <div className={styles.docFooter}>
                         <p>This is a computer-generated challan. No signature required.</p>

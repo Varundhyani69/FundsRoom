@@ -6,6 +6,8 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     margin-bottom: 1.5rem;
 }
 
@@ -23,6 +25,7 @@
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
     font-weight: 600;
+    white-space: nowrap;
 }
 
 .addBtn:hover {
@@ -40,7 +43,7 @@
     display: flex;
     gap: 0.5rem;
     flex: 1;
-    min-width: 260px;
+    min-width: 200px;
 }
 
 .searchInput {
@@ -50,6 +53,7 @@
     padding: 0.55rem 0.9rem;
     font-size: 0.9rem;
     outline: none;
+    min-width: 0;
 }
 
 .searchInput:focus {
@@ -63,6 +67,7 @@
     border-radius: 8px;
     padding: 0.55rem 1rem;
     font-size: 0.9rem;
+    white-space: nowrap;
 }
 
 .select {
@@ -72,6 +77,7 @@
     font-size: 0.875rem;
     outline: none;
     background: #fff;
+    min-width: 130px;
 }
 
 .tableWrap {
@@ -79,12 +85,14 @@
     border-radius: 12px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.875rem;
+    min-width: 620px;
 }
 
 .table th {
@@ -97,6 +105,7 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
 }
 
 .table td {
@@ -150,6 +159,7 @@
     padding: 0.3rem 0.75rem;
     font-size: 0.8rem;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .viewBtn:hover {
@@ -188,4 +198,105 @@
 .pageBtn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .searchForm {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .select {
+        width: 100%;
+    }
+}
+
+/* ── Mobile card list (hidden on desktop) ─────────── */
+.cardList {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .tableWrap {
+        display: none;
+    }
+
+    .cardList {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 1rem 1.1rem;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+        transition: box-shadow 0.15s;
+    }
+
+    .card:active {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    }
+
+    .cardTop {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+
+    .cardChallanNo {
+        font-size: 0.82rem;
+        font-family: monospace;
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+
+    .cardCustomer {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1a1a2e;
+        margin-top: 0.1rem;
+    }
+
+    .cardBiz {
+        font-size: 0.75rem;
+        color: #9ca3af;
+        margin-top: 0.1rem;
+    }
+
+    .cardBottom {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding-top: 0.5rem;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    .cardAmount {
+        font-size: 1.05rem;
+        font-weight: 800;
+        color: #1a1a2e;
+    }
+
+    .cardMeta {
+        display: flex;
+        gap: 0.75rem;
+        font-size: 0.78rem;
+        color: #9ca3af;
+    }
 }

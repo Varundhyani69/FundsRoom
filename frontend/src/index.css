@@ -1,7 +1,14 @@
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html {
+  /* prevent iOS font size bump on orientation change */
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
@@ -10,6 +17,8 @@ body {
   background: #f0f2f5;
   color: #1a1a2e;
   line-height: 1.5;
+  /* smoother scrolling on mobile */
+  -webkit-overflow-scrolling: touch;
 }
 
 a {
@@ -20,8 +29,39 @@ a {
 button {
   cursor: pointer;
   font-family: inherit;
+  /* minimum 44px tap target recommended by Apple/Google */
+  min-height: 36px;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
   font-family: inherit;
+  /* 16px minimum prevents iOS Safari from auto-zooming the page on input focus */
+  font-size: 16px;
+}
+
+/* Restore smaller font inside the module-level styles — 16px here is a floor, not display size */
+@media (min-width: 769px) {
+
+  input,
+  select,
+  textarea {
+    font-size: inherit;
+  }
+}
+
+/* Scrollable tables don't show ugly scrollbar on mobile */
+::-webkit-scrollbar {
+  height: 4px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 999px;
 }

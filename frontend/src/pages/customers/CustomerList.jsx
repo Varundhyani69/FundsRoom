@@ -35,9 +35,7 @@ export default function CustomerList() {
         }
     }
 
-    useEffect(() => {
-        fetchCustomers();
-    }, [page, status, customerType]);
+    useEffect(() => { fetchCustomers(); }, [page, status, customerType]);
 
     function handleSearch(e) {
         e.preventDefault();
@@ -55,7 +53,6 @@ export default function CustomerList() {
                     </button>
                 </div>
 
-                {/* Filters */}
                 <div className={styles.filters}>
                     <form onSubmit={handleSearch} className={styles.searchForm}>
                         <input
@@ -67,14 +64,12 @@ export default function CustomerList() {
                         />
                         <button type="submit" className={styles.searchBtn}>Search</button>
                     </form>
-
                     <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className={styles.select}>
                         <option value="">All Status</option>
                         <option value="lead">Lead</option>
                         <option value="active">Active</option>
                         <option value="inactive">Inactive</option>
                     </select>
-
                     <select value={customerType} onChange={(e) => { setCustomerType(e.target.value); setPage(1); }} className={styles.select}>
                         <option value="">All Types</option>
                         <option value="retail">Retail</option>
@@ -83,51 +78,80 @@ export default function CustomerList() {
                     </select>
                 </div>
 
-                {/* Table */}
-                <div className={styles.tableWrap}>
-                    {loading ? (
-                        <div className={styles.loading}>Loading...</div>
-                    ) : customers.length === 0 ? (
-                        <div className={styles.empty}>No customers found</div>
-                    ) : (
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Name</th>
-                                    <th>Business</th>
-                                    <th>Mobile</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th>Follow-up</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {customers.map((c, i) => (
-                                    <tr key={c.id}>
-                                        <td>{(page - 1) * 10 + i + 1}</td>
-                                        <td className={styles.nameCell}>
-                                            <span className={styles.name}>{c.name}</span>
-                                            <span className={styles.email}>{c.email}</span>
-                                        </td>
-                                        <td>{c.business_name || "—"}</td>
-                                        <td>{c.mobile}</td>
-                                        <td><Badge text={c.customer_type} /></td>
-                                        <td><Badge text={c.status} /></td>
-                                        <td>{c.follow_up_date ? new Date(c.follow_up_date).toLocaleDateString() : "—"}</td>
-                                        <td className={styles.actions}>
-                                            <button className={styles.viewBtn} onClick={() => navigate(`/customers/${c.id}`)}>View</button>
-                                            <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>
-                                        </td>
+                {loading ? (
+                    <div className={styles.loading}>Loading...</div>
+                ) : customers.length === 0 ? (
+                    <div className={styles.empty}>No customers found</div>
+                ) : (
+                    <>
+                        {/* ── Desktop table ── */}
+                        <div className={styles.tableWrap}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Name</th>
+                                        <th>Business</th>
+                                        <th>Mobile</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Follow-up</th>
+                                        <th>Actions</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
+                                </thead>
+                                <tbody>
+                                    {customers.map((c, i) => (
+                                        <tr key={c.id}>
+                                            <td>{(page - 1) * 10 + i + 1}</td>
+                                            <td className={styles.nameCell}>
+                                                <span className={styles.name}>{c.name}</span>
+                                                <span className={styles.email}>{c.email}</span>
+                                            </td>
+                                            <td>{c.business_name || "—"}</td>
+                                            <td>{c.mobile}</td>
+                                            <td><Badge text={c.customer_type} /></td>
+                                            <td><Badge text={c.status} /></td>
+                                            <td>{c.follow_up_date ? new Date(c.follow_up_date).toLocaleDateString() : "—"}</td>
+                                            <td className={styles.actions}>
+                                                <button className={styles.viewBtn} onClick={() => navigate(`/customers/${c.id}`)}>View</button>
+                                                <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
 
-                {/* Pagination */}
+                        {/* ── Mobile cards ── */}
+                        <div className={styles.cardList}>
+                            {customers.map((c) => (
+                                <div key={c.id} className={styles.card}>
+                                    <div className={styles.cardTop}>
+                                        <div>
+                                            <div className={styles.cardName}>{c.name}</div>
+                                            {c.business_name && <div className={styles.cardBiz}>{c.business_name}</div>}
+                                        </div>
+                                        <div className={styles.cardBadges}>
+                                            <Badge text={c.status} />
+                                            <Badge text={c.customer_type} />
+                                        </div>
+                                    </div>
+                                    <div className={styles.cardMeta}>
+                                        <span>📞 {c.mobile}</span>
+                                        {c.follow_up_date && (
+                                            <span>📅 {new Date(c.follow_up_date).toLocaleDateString()}</span>
+                                        )}
+                                    </div>
+                                    <div className={styles.cardActions}>
+                                        <button className={styles.viewBtn} onClick={() => navigate(`/customers/${c.id}`)}>View</button>
+                                        <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
+
                 {pagination.totalPages > 1 && (
                     <div className={styles.pagination}>
                         <button disabled={page === 1} onClick={() => setPage((p) => p - 1)} className={styles.pageBtn}>← Prev</button>

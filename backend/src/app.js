@@ -6,6 +6,8 @@ const authRoutes = require("./modules/auth/auth.routes");
 const customerRoutes = require("./modules/customers/customer.routes");
 const productRoutes = require("./modules/products/product.routes");
 const stockMovementRoutes = require("./modules/products/stockMovement.routes");
+const challanRoutes = require("./modules/challans/challan.routes");
+const dashboardRoutes = require("./modules/dashboard/dashboard.routes");
 const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
@@ -25,6 +27,8 @@ app.use("/auth", authRoutes);
 app.use("/customers", customerRoutes);
 app.use("/products", productRoutes);
 app.use("/stock-movements", stockMovementRoutes);
+app.use("/challans", challanRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 // ── 404 handler ──────────────────────────────────────────────
 app.use((req, res) => {

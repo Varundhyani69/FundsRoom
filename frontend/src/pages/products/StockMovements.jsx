@@ -58,51 +58,83 @@ export default function StockMovements() {
                     </select>
                 </div>
 
-                <div className={styles.tableWrap}>
-                    {loading ? (
-                        <div className={styles.loading}>Loading...</div>
-                    ) : movements.length === 0 ? (
-                        <div className={styles.empty}>No stock movements found</div>
-                    ) : (
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Product</th>
-                                    <th>SKU</th>
-                                    <th>Type</th>
-                                    <th>Quantity</th>
-                                    <th>Reason</th>
-                                    <th>Done By</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {movements.map((m) => (
-                                    <tr key={m.id}>
-                                        <td className={styles.date}>{new Date(m.created_at).toLocaleString()}</td>
-                                        <td
-                                            className={styles.productName}
-                                            onClick={() => navigate(`/products/${m.product_id}`)}
-                                        >
-                                            {m.product_name}
-                                        </td>
-                                        <td className={styles.sku}>{m.sku}</td>
-                                        <td>
+                {loading ? (
+                    <div className={styles.loading}>Loading...</div>
+                ) : movements.length === 0 ? (
+                    <div className={styles.empty}>No stock movements found</div>
+                ) : (
+                    <>
+                        {/* ── Desktop table ── */}
+                        <div className={styles.tableWrap}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Product</th>
+                                        <th>SKU</th>
+                                        <th>Type</th>
+                                        <th>Quantity</th>
+                                        <th>Reason</th>
+                                        <th>Done By</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {movements.map((m) => (
+                                        <tr key={m.id}>
+                                            <td className={styles.date}>{new Date(m.created_at).toLocaleString()}</td>
+                                            <td className={styles.productName} onClick={() => navigate(`/products/${m.product_id}`)}>
+                                                {m.product_name}
+                                            </td>
+                                            <td className={styles.sku}>{m.sku}</td>
+                                            <td>
+                                                <span className={`${styles.typeBadge} ${m.movement_type === "IN" ? styles.typeIn : styles.typeOut}`}>
+                                                    {m.movement_type === "IN" ? "▲ IN" : "▼ OUT"}
+                                                </span>
+                                            </td>
+                                            <td className={`${styles.qty} ${m.movement_type === "IN" ? styles.qtyIn : styles.qtyOut}`}>
+                                                {m.movement_type === "IN" ? "+" : "-"}{m.quantity}
+                                            </td>
+                                            <td className={styles.reason}>{m.reason || "—"}</td>
+                                            <td>{m.created_by_name || "—"}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* ── Mobile cards ── */}
+                        <div className={styles.cardList}>
+                            {movements.map((m) => (
+                                <div key={m.id} className={styles.card}>
+                                    <div className={styles.cardTop}>
+                                        <div>
+                                            <div
+                                                className={styles.cardProduct}
+                                                onClick={() => navigate(`/products/${m.product_id}`)}
+                                            >
+                                                {m.product_name}
+                                            </div>
+                                            <div className={styles.cardSku}>{m.sku}</div>
+                                        </div>
+                                        <div className={styles.cardRight}>
+                                            <span className={`${styles.cardQty} ${m.movement_type === "IN" ? styles.qtyIn : styles.qtyOut}`}>
+                                                {m.movement_type === "IN" ? "+" : "-"}{m.quantity}
+                                            </span>
                                             <span className={`${styles.typeBadge} ${m.movement_type === "IN" ? styles.typeIn : styles.typeOut}`}>
                                                 {m.movement_type === "IN" ? "▲ IN" : "▼ OUT"}
                                             </span>
-                                        </td>
-                                        <td className={`${styles.qty} ${m.movement_type === "IN" ? styles.qtyIn : styles.qtyOut}`}>
-                                            {m.movement_type === "IN" ? "+" : "-"}{m.quantity}
-                                        </td>
-                                        <td className={styles.reason}>{m.reason || "—"}</td>
-                                        <td>{m.created_by_name || "—"}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
+                                        </div>
+                                    </div>
+                                    <div className={styles.cardMeta}>
+                                        {m.reason && <span>📝 {m.reason}</span>}
+                                        <span>👤 {m.created_by_name || "—"}</span>
+                                        <span>🕐 {new Date(m.created_at).toLocaleString()}</span>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
 
                 {pagination.totalPages > 1 && (
                     <div className={styles.pagination}>

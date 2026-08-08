@@ -8,7 +8,8 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 200;
+    transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .brand {
@@ -26,6 +27,22 @@
 .brandName {
     font-size: 1.1rem;
     font-weight: 700;
+    color: #fff;
+    flex: 1;
+}
+
+/* Close button — hidden on desktop */
+.closeBtn {
+    display: none;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    padding: 0.2rem 0.4rem;
+    line-height: 1;
+}
+
+.closeBtn:hover {
     color: #fff;
 }
 
@@ -100,4 +117,34 @@
 
 .logoutBtn:hover {
     background: rgba(239, 68, 68, 0.25);
+}
+
+/* Semi-transparent overlay behind sidebar on mobile */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 199;
+}
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: none;
+    }
+
+    .sidebarOpen {
+        transform: translateX(0);
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.35);
+    }
+
+    .closeBtn {
+        display: block;
+    }
+
+    .overlay {
+        display: block;
+    }
 }

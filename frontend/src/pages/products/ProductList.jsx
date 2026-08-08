@@ -65,7 +65,6 @@ export default function ProductList() {
                     </div>
                 </div>
 
-                {/* Filters */}
                 <div className={styles.filters}>
                     <form onSubmit={handleSearch} className={styles.searchForm}>
                         <input
@@ -77,12 +76,10 @@ export default function ProductList() {
                         />
                         <button type="submit" className={styles.searchBtn}>Search</button>
                     </form>
-
                     <select value={category} onChange={(e) => { setCategory(e.target.value); setPage(1); }} className={styles.select}>
                         <option value="">All Categories</option>
                         {categories.map((c) => <option key={c} value={c}>{c}</option>)}
                     </select>
-
                     <label className={styles.toggle}>
                         <input
                             type="checkbox"
@@ -93,60 +90,93 @@ export default function ProductList() {
                     </label>
                 </div>
 
-                {/* Table */}
-                <div className={styles.tableWrap}>
-                    {loading ? (
-                        <div className={styles.loading}>Loading...</div>
-                    ) : products.length === 0 ? (
-                        <div className={styles.empty}>No products found</div>
-                    ) : (
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    <th>SKU</th>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Unit Price</th>
-                                    <th>Stock</th>
-                                    <th>Min Alert</th>
-                                    <th>Warehouse</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {products.map((p) => {
-                                    const isLow = p.current_stock <= p.min_stock_alert;
-                                    return (
-                                        <tr key={p.id}>
-                                            <td className={styles.sku}>{p.sku}</td>
-                                            <td className={styles.name}>{p.name}</td>
-                                            <td>{p.category || "—"}</td>
-                                            <td>₹{parseFloat(p.unit_price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
-                                            <td>
-                                                <span className={`${styles.stock} ${isLow ? styles.stockLow : ""}`}>
+                {loading ? (
+                    <div className={styles.loading}>Loading...</div>
+                ) : products.length === 0 ? (
+                    <div className={styles.empty}>No products found</div>
+                ) : (
+                    <>
+                        {/* ── Desktop table ── */}
+                        <div className={styles.tableWrap}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th>SKU</th>
+                                        <th>Product Name</th>
+                                        <th>Category</th>
+                                        <th>Unit Price</th>
+                                        <th>Stock</th>
+                                        <th>Min Alert</th>
+                                        <th>Warehouse</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {products.map((p) => {
+                                        const isLow = p.current_stock <= p.min_stock_alert;
+                                        return (
+                                            <tr key={p.id}>
+                                                <td className={styles.sku}>{p.sku}</td>
+                                                <td className={styles.name}>{p.name}</td>
+                                                <td>{p.category || "—"}</td>
+                                                <td>₹{parseFloat(p.unit_price).toLocaleString("en-IN", { minimumFractionDigits: 2 })}</td>
+                                                <td>
+                                                    <span className={`${styles.stock} ${isLow ? styles.stockLow : ""}`}>
+                                                        {p.current_stock}
+                                                        {isLow && <span className={styles.lowBadge}>Low</span>}
+                                                    </span>
+                                                </td>
+                                                <td>{p.min_stock_alert}</td>
+                                                <td>{p.warehouse || "—"}</td>
+                                                <td className={styles.actions}>
+                                                    <button className={styles.viewBtn} onClick={() => navigate(`/products/${p.id}`)}>View</button>
+                                                    {canEdit && (
+                                                        <button className={styles.editBtn} onClick={() => navigate(`/products/${p.id}/edit`)}>Edit</button>
+                                                    )}
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* ── Mobile cards ── */}
+                        <div className={styles.cardList}>
+                            {products.map((p) => {
+                                const isLow = p.current_stock <= p.min_stock_alert;
+                                return (
+                                    <div key={p.id} className={`${styles.card} ${isLow ? styles.cardLow : ""}`}>
+                                        <div className={styles.cardTop}>
+                                            <div className={styles.cardMain}>
+                                                <div className={styles.cardName}>{p.name}</div>
+                                                <div className={styles.cardSku}>{p.sku}</div>
+                                            </div>
+                                            <div className={styles.cardStock}>
+                                                <span className={`${styles.cardStockNum} ${isLow ? styles.stockLow : styles.stockOk}`}>
                                                     {p.current_stock}
-                                                    {isLow && <span className={styles.lowBadge}>Low</span>}
                                                 </span>
-                                            </td>
-                                            <td>{p.min_stock_alert}</td>
-                                            <td>{p.warehouse || "—"}</td>
-                                            <td className={styles.actions}>
-                                                <button className={styles.viewBtn} onClick={() => navigate(`/products/${p.id}`)}>
-                                                    View
-                                                </button>
-                                                {canEdit && (
-                                                    <button className={styles.editBtn} onClick={() => navigate(`/products/${p.id}/edit`)}>
-                                                        Edit
-                                                    </button>
-                                                )}
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
+                                                <span className={styles.cardStockLabel}>in stock</span>
+                                                {isLow && <span className={styles.lowBadge}>Low</span>}
+                                            </div>
+                                        </div>
+                                        <div className={styles.cardMeta}>
+                                            {p.category && <span>📁 {p.category}</span>}
+                                            <span>💰 ₹{parseFloat(p.unit_price).toLocaleString("en-IN")}</span>
+                                            {p.warehouse && <span>🏭 {p.warehouse}</span>}
+                                        </div>
+                                        <div className={styles.cardActions}>
+                                            <button className={styles.viewBtn} onClick={() => navigate(`/products/${p.id}`)}>View</button>
+                                            {canEdit && (
+                                                <button className={styles.editBtn} onClick={() => navigate(`/products/${p.id}/edit`)}>Edit</button>
+                                            )}
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </>
+                )}
 
                 {pagination.totalPages > 1 && (
                     <div className={styles.pagination}>

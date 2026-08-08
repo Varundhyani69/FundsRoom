@@ -7,6 +7,7 @@
     align-items: center;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .header h1 {
@@ -20,7 +21,7 @@
     border: none;
     color: #6b7280;
     font-size: 0.9rem;
-    padding: 0.3rem 0;
+    padding: 0;
 }
 
 .back:hover {
@@ -51,7 +52,7 @@
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
 }
 
@@ -78,6 +79,7 @@
     background: #fff;
     transition: border-color 0.2s;
     resize: vertical;
+    width: 100%;
 }
 
 .field input:focus,
@@ -90,6 +92,7 @@
     display: flex;
     justify-content: flex-end;
     gap: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .cancelBtn {
@@ -99,7 +102,6 @@
     border-radius: 8px;
     padding: 0.65rem 1.3rem;
     font-size: 0.9rem;
-    font-weight: 500;
 }
 
 .saveBtn {
@@ -125,4 +127,25 @@
     padding: 3rem;
     text-align: center;
     color: #9ca3af;
+}
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 540px) {
+    .section {
+        padding: 1.1rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancelBtn,
+    .saveBtn {
+        width: 100%;
+        text-align: center;
+    }
 }

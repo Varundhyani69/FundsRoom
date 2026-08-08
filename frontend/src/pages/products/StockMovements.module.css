@@ -49,12 +49,14 @@
     border-radius: 12px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 
 .table {
     width: 100%;
     border-collapse: collapse;
     font-size: 0.875rem;
+    min-width: 580px;
 }
 
 .table th {
@@ -67,6 +69,7 @@
     text-transform: uppercase;
     letter-spacing: 0.04em;
     border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
 }
 
 .table td {
@@ -174,4 +177,91 @@
 .pageBtn:disabled {
     opacity: 0.4;
     cursor: not-allowed;
+}
+
+/* ── Mobile ──────────────────────────────────────── */
+@media (max-width: 600px) {
+    .header h1 {
+        font-size: 1.2rem;
+    }
+
+    .select {
+        width: 100%;
+    }
+}
+
+/* ── Mobile card list (hidden on desktop) ─────────── */
+.cardList {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .tableWrap {
+        display: none;
+    }
+
+    .cardList {
+        display: flex;
+        flex-direction: column;
+        gap: 0.65rem;
+    }
+
+    .card {
+        background: #fff;
+        border-radius: 12px;
+        padding: 0.9rem 1rem;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .cardTop {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 0.75rem;
+    }
+
+    .cardProduct {
+        font-size: 0.9rem;
+        font-weight: 700;
+        color: #1d4ed8;
+        cursor: pointer;
+    }
+
+    .cardProduct:active {
+        text-decoration: underline;
+    }
+
+    .cardSku {
+        font-size: 0.72rem;
+        font-family: monospace;
+        color: #9ca3af;
+        margin-top: 0.1rem;
+    }
+
+    .cardRight {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.25rem;
+        flex-shrink: 0;
+    }
+
+    .cardQty {
+        font-size: 1.2rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .cardMeta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        font-size: 0.78rem;
+        color: #6b7280;
+        padding-top: 0.35rem;
+        border-top: 1px solid #f1f5f9;
+    }
 }

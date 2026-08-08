@@ -67,7 +67,6 @@ export default function ChallanList() {
                         />
                         <button type="submit" className={styles.searchBtn}>Search</button>
                     </form>
-
                     <select value={status} onChange={(e) => { setStatus(e.target.value); setPage(1); }} className={styles.select}>
                         <option value="">All Status</option>
                         <option value="draft">Draft</option>
@@ -76,51 +75,79 @@ export default function ChallanList() {
                     </select>
                 </div>
 
-                <div className={styles.tableWrap}>
-                    {loading ? (
-                        <div className={styles.loading}>Loading...</div>
-                    ) : challans.length === 0 ? (
-                        <div className={styles.empty}>No challans found</div>
-                    ) : (
-                        <table className={styles.table}>
-                            <thead>
-                                <tr>
-                                    <th>Challan No.</th>
-                                    <th>Customer</th>
-                                    <th>Total Qty</th>
-                                    <th>Total Amount</th>
-                                    <th>Status</th>
-                                    <th>Created By</th>
-                                    <th>Date</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {challans.map((ch) => (
-                                    <tr key={ch.id}>
-                                        <td className={styles.challanNo}>{ch.challan_number}</td>
-                                        <td>
-                                            <div className={styles.customerName}>{ch.customer_name}</div>
-                                            {ch.business_name && <div className={styles.businessName}>{ch.business_name}</div>}
-                                        </td>
-                                        <td>{ch.total_quantity}</td>
-                                        <td className={styles.amount}>
-                                            ₹{parseFloat(ch.total_amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
-                                        </td>
-                                        <td><Badge text={ch.status} /></td>
-                                        <td>{ch.created_by_name || "—"}</td>
-                                        <td className={styles.date}>{new Date(ch.created_at).toLocaleDateString()}</td>
-                                        <td>
-                                            <button className={styles.viewBtn} onClick={() => navigate(`/challans/${ch.id}`)}>
-                                                View
-                                            </button>
-                                        </td>
+                {loading ? (
+                    <div className={styles.loading}>Loading...</div>
+                ) : challans.length === 0 ? (
+                    <div className={styles.empty}>No challans found</div>
+                ) : (
+                    <>
+                        {/* ── Desktop table ── */}
+                        <div className={styles.tableWrap}>
+                            <table className={styles.table}>
+                                <thead>
+                                    <tr>
+                                        <th>Challan No.</th>
+                                        <th>Customer</th>
+                                        <th>Total Qty</th>
+                                        <th>Total Amount</th>
+                                        <th>Status</th>
+                                        <th>Created By</th>
+                                        <th>Date</th>
+                                        <th>Actions</th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    )}
-                </div>
+                                </thead>
+                                <tbody>
+                                    {challans.map((ch) => (
+                                        <tr key={ch.id}>
+                                            <td className={styles.challanNo}>{ch.challan_number}</td>
+                                            <td>
+                                                <div className={styles.customerName}>{ch.customer_name}</div>
+                                                {ch.business_name && <div className={styles.businessName}>{ch.business_name}</div>}
+                                            </td>
+                                            <td>{ch.total_quantity}</td>
+                                            <td className={styles.amount}>
+                                                ₹{parseFloat(ch.total_amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                                            </td>
+                                            <td><Badge text={ch.status} /></td>
+                                            <td>{ch.created_by_name || "—"}</td>
+                                            <td className={styles.date}>{new Date(ch.created_at).toLocaleDateString()}</td>
+                                            <td>
+                                                <button className={styles.viewBtn} onClick={() => navigate(`/challans/${ch.id}`)}>
+                                                    View
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        {/* ── Mobile cards ── */}
+                        <div className={styles.cardList}>
+                            {challans.map((ch) => (
+                                <div key={ch.id} className={styles.card} onClick={() => navigate(`/challans/${ch.id}`)}>
+                                    <div className={styles.cardTop}>
+                                        <div>
+                                            <div className={styles.cardChallanNo}>{ch.challan_number}</div>
+                                            <div className={styles.cardCustomer}>{ch.customer_name}</div>
+                                            {ch.business_name && <div className={styles.cardBiz}>{ch.business_name}</div>}
+                                        </div>
+                                        <Badge text={ch.status} />
+                                    </div>
+                                    <div className={styles.cardBottom}>
+                                        <div className={styles.cardAmount}>
+                                            ₹{parseFloat(ch.total_amount).toLocaleString("en-IN", { minimumFractionDigits: 2 })}
+                                        </div>
+                                        <div className={styles.cardMeta}>
+                                            <span>{ch.total_quantity} items</span>
+                                            <span>{new Date(ch.created_at).toLocaleDateString()}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </>
+                )}
 
                 {pagination.totalPages > 1 && (
                     <div className={styles.pagination}>

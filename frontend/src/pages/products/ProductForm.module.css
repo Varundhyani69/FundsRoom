@@ -63,6 +63,24 @@
     .span2 {
         grid-column: span 1;
     }
+
+    .section {
+        padding: 1.1rem;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancelBtn,
+    .saveBtn {
+        width: 100%;
+        text-align: center;
+    }
 }
 
 .field {

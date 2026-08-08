@@ -349,5 +349,57 @@
 
     .itemRow {
         grid-template-columns: 1fr 1fr;
+        background: #f8fafc;
+        border-radius: 10px;
+        padding: 0.8rem;
+        margin-bottom: 0.5rem;
+        border-bottom: none;
+        gap: 0.6rem;
+    }
+
+    .productSelect {
+        grid-column: span 2;
+    }
+
+    .warnMsg {
+        grid-column: span 2;
+    }
+
+    .removeBtn {
+        grid-column: span 2;
+        width: 100%;
+        padding: 0.45rem;
+    }
+
+    .actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancelBtn,
+    .submitBtn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .saveToggle {
+        flex-direction: column;
+    }
+
+    .saveBtn {
+        max-width: 100%;
+    }
+
+    .selectInput {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 540px) {
+    .section {
+        padding: 1.1rem;
+    }
+
+    .page {
+        padding-bottom: 2rem;
     }
 }

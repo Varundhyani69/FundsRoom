@@ -8,9 +8,11 @@
 
 .headerRight {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    align-items: flex-start;
+    justify-content: space-between;
     margin-top: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
 }
 
 .headerRight h1 {
@@ -39,6 +41,7 @@
     padding: 0.4rem 1rem;
     font-size: 0.875rem;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .editBtn:hover {
@@ -50,12 +53,6 @@
     grid-template-columns: 1fr 1.4fr;
     gap: 1.5rem;
     align-items: start;
-}
-
-@media (max-width: 860px) {
-    .grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .card {
@@ -98,9 +95,9 @@
     font-size: 0.9rem;
     color: #1a1a2e;
     font-weight: 500;
+    word-break: break-word;
 }
 
-/* Follow-up form */
 .noteForm {
     display: flex;
     flex-direction: column;
@@ -169,7 +166,6 @@
     cursor: not-allowed;
 }
 
-/* Timeline */
 .timeline {
     display: flex;
     flex-direction: column;
@@ -224,4 +220,35 @@
 .followupSection {
     display: flex;
     flex-direction: column;
+}
+
+/* ── Responsive ──────────────────────────────────── */
+@media (max-width: 860px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 540px) {
+    .card {
+        padding: 1.1rem;
+    }
+
+    .headerRight h1 {
+        font-size: 1.2rem;
+    }
+
+    .infoLabel {
+        width: 80px;
+    }
+
+    .noteFooter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .noteBtn {
+        width: 100%;
+        text-align: center;
+    }
 }
