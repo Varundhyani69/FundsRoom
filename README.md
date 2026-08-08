@@ -14,7 +14,7 @@ A full-stack internal operations portal built for a wholesale/distribution compa
 | Frontend   | React 18, JavaScript, CSS Modules       |
 | Bundler    | Vite 8                                  |
 | Containers | Docker + Docker Compose                 |
-| Deployment | Render (backend) · Vercel (frontend)    |
+| Deployment | AWS EC2 + Docker (backend) · Render Static Site (frontend) |
 
 ---
 
@@ -242,23 +242,53 @@ Key design decisions:
 
 ## Deployment
 
-### Backend on Render
-1. Push to GitHub
-2. Create a new Web Service, set root to `backend`
-3. Build command: `npm install`
-4. Start command: `node src/index.js`
-5. Add all env variables from `.env.example` in the Render dashboard
+### Current Setup
+| Layer | Platform |
+|-------|----------|
+| Frontend | Render Static Site |
+| Backend + MySQL | AWS EC2 (Docker Compose) |
 
-### Frontend on Vercel
-1. Import the repo, set root directory to `frontend`
-2. Add env variable: `VITE_API_URL=<your render backend url>`
-3. Build command: `npm run build` — output dir: `dist`
+### Backend on AWS EC2 (Docker)
 
-### Database
-Use any free MySQL-compatible service:
-- [PlanetScale](https://planetscale.com) (MySQL-compatible)
-- [Railway](https://railway.app) (MySQL)
-- [Clever Cloud](https://clever-cloud.com) (MySQL)
+Prerequisites: EC2 instance (Ubuntu 22.04), Docker installed, ports 80/443/5000 open.
+
+```bash
+# Clone repo on EC2
+git clone <repo-url>
+cd <repo>
+
+# Create env file
+cp .env.prod.example .env.prod
+nano .env.prod   # fill in DB passwords, JWT secret, CORS_ORIGIN
+
+# Start MySQL + backend containers
+docker compose -f docker-compose.server.yml --env-file .env.prod up -d --build
+
+# Seed database (run once)
+docker exec erp_backend node src/db/seed.js
+```
+
+Backend runs on port 5000. Caddy is used as a reverse proxy to provide HTTPS via `https://<ec2-ip>.nip.io`.
+
+### Frontend on Render Static Site
+
+1. Connect GitHub repo on [render.com](https://render.com)
+2. New → Static Site → select repo
+3. Root directory: `frontend`
+4. Build command: `npm run build`
+5. Publish directory: `dist`
+6. Add environment variable: `VITE_API_URL=https://<ec2-ip>.nip.io`
+7. Deploy
+
+### Redeploy after code changes
+
+**Backend:**
+```bash
+git pull
+docker compose -f docker-compose.server.yml --env-file .env.prod up -d --build
+```
+
+**Frontend:** push to GitHub — Render auto-deploys.
 
 ---
 
