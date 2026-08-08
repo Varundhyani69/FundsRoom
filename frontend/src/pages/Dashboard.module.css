@@ -1,52 +1,343 @@
 .page {
-    max-width: 900px;
+    max-width: 1200px;
+}
+
+.welcomeRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
 }
 
 .heading {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #1a1a2e;
 }
 
 .sub {
+    font-size: 0.875rem;
     color: #6b7280;
-    margin-top: 0.35rem;
-    font-size: 0.95rem;
+    margin-top: 0.3rem;
 }
 
-.cards {
+.role {
+    background: #dbeafe;
+    color: #1d4ed8;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* Stat cards */
+.statsGrid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.statCard {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.3rem 1.4rem;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border-left: 4px solid transparent;
+}
+
+.statCard:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.statCard_blue {
+    border-left-color: #3b82f6;
+}
+
+.statCard_green {
+    border-left-color: #16a34a;
+}
+
+.statCard_orange {
+    border-left-color: #f59e0b;
+}
+
+.statCard_purple {
+    border-left-color: #7c3aed;
+}
+
+.statIcon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.statBody {
+    flex: 1;
+}
+
+.statValue {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1.1;
+}
+
+.statLabel {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-top: 0.25rem;
+}
+
+.statSub {
+    font-size: 0.75rem;
+    color: #9ca3af;
+    margin-top: 0.2rem;
+}
+
+/* Bottom grid */
+.bottomGrid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
     gap: 1.2rem;
-    margin-top: 2rem;
+    align-items: start;
+}
+
+@media (max-width: 1000px) {
+    .bottomGrid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .bottomGrid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .card {
     background: #fff;
     border-radius: 12px;
-    padding: 1.5rem;
+    padding: 1.3rem 1.4rem;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.07);
-    transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+.cardHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
 }
 
-.cardIcon {
-    font-size: 2rem;
-    margin-bottom: 0.75rem;
+.cardTitle {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1a1a2e;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
-.cardLabel {
-    font-size: 1.05rem;
+.alertCount {
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.1rem 0.45rem;
+    border-radius: 999px;
+}
+
+.cardLink {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 0.8rem;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.cardLink:hover {
+    text-decoration: underline;
+}
+
+.empty {
+    font-size: 0.875rem;
+    color: #9ca3af;
+    padding: 0.5rem 0;
+}
+
+/* Recent challans */
+.challanList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.challanRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.75rem;
+    border-radius: 8px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.challanRow:hover {
+    background: #f1f5f9;
+}
+
+.challanLeft {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.challanNo {
+    font-size: 0.82rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: #1a1a2e;
+}
+
+.challanCustomer {
+    font-size: 0.78rem;
+    color: #6b7280;
+}
+
+.challanRight {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.challanAmt {
+    font-size: 0.875rem;
+    font-weight: 700;
+    color: #1a1a2e;
+}
+
+/* Low stock */
+.stockList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stockRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    background: #fff7ed;
+    cursor: pointer;
+    border-left: 3px solid #f59e0b;
+    transition: background 0.15s;
+}
+
+.stockRow:hover {
+    background: #ffedd5;
+}
+
+.stockInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.stockName {
+    font-size: 0.82rem;
     font-weight: 600;
     color: #1a1a2e;
 }
 
-.cardHint {
-    font-size: 0.8rem;
+.stockSku {
+    font-size: 0.72rem;
     color: #9ca3af;
-    margin-top: 0.25rem;
+}
+
+.stockNums {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.1rem;
+}
+
+.stockCurrent {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #dc2626;
+}
+
+.stockMin {
+    font-size: 0.7rem;
+    color: #9ca3af;
+}
+
+/* Follow-ups */
+.followupList {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.followupRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.55rem 0.75rem;
+    border-radius: 8px;
+    background: #f8fafc;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+.followupRow:hover {
+    background: #f1f5f9;
+}
+
+.followupInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.followupName {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+.followupMobile {
+    font-size: 0.72rem;
+    color: #9ca3af;
+}
+
+.followupRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.3rem;
+}
+
+.followupDate {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #0f3460;
+}
+
+.loadingState {
+    padding: 3rem;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 1rem;
 }
