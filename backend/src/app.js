@@ -12,8 +12,17 @@ const errorHandler = require("./middleware/errorHandler");
 
 const app = express();
 
-// ── Middleware ────────────────────────────────────────────────
-app.use(cors());
+// ── CORS ──────────────────────────────────────────────────────
+// In production, only allow requests from the Vercel frontend.
+// CORS_ORIGIN env var should be set to your Vercel URL e.g.
+//   https://your-app.vercel.app
+// Leave it unset (or set to *) during local development.
+const corsOptions = {
+    origin: process.env.CORS_ORIGIN || "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

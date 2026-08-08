@@ -1,5 +1,12 @@
 version: "3.9"
 
+# Local development — runs all 3 services on your machine
+# Usage: docker compose up --build
+#
+# Frontend: http://localhost:3000
+# Backend:  http://localhost:5000
+# MySQL:    localhost:3307
+
 services:
   db:
     image: mysql:8.0
@@ -35,9 +42,9 @@ services:
       DB_USER: erp_user
       DB_PASSWORD: erp_password
       DB_NAME: erp_crm_db
-      JWT_SECRET: change_this_in_production_please
+      JWT_SECRET: local_dev_jwt_secret
       JWT_EXPIRES_IN: 7d
-      NODE_ENV: production
+      NODE_ENV: development
     ports:
       - "5000:5000"
 
