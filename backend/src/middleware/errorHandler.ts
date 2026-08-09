@@ -1,8 +1,17 @@
-/**
- * Global error handler middleware.
- * Catches anything passed via next(err) and returns a clean JSON response.
- */
-function errorHandler(err, req, res, next) {
+import { Request, Response, NextFunction } from "express";
+
+interface AppError extends Error {
+    status?: number;
+    statusCode?: number;
+}
+
+export default function errorHandler(
+    err: AppError,
+    req: Request,
+    res: Response,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _next: NextFunction
+): void {
     console.error(`[ERROR] ${req.method} ${req.originalUrl} -`, err.message);
 
     const status = err.status || err.statusCode || 500;
@@ -14,5 +23,3 @@ function errorHandler(err, req, res, next) {
         ...(process.env.NODE_ENV === "development" && { stack: err.stack }),
     });
 }
-
-module.exports = errorHandler;

@@ -1,23 +1,21 @@
-const express = require("express");
-const cors = require("cors");
-require("dotenv").config();
+import express, { Request, Response, NextFunction } from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-const authRoutes = require("./modules/auth/auth.routes");
-const customerRoutes = require("./modules/customers/customer.routes");
-const productRoutes = require("./modules/products/product.routes");
-const stockMovementRoutes = require("./modules/products/stockMovement.routes");
-const challanRoutes = require("./modules/challans/challan.routes");
-const dashboardRoutes = require("./modules/dashboard/dashboard.routes");
-const errorHandler = require("./middleware/errorHandler");
+import authRoutes from "./modules/auth/auth.routes";
+import customerRoutes from "./modules/customers/customer.routes";
+import productRoutes from "./modules/products/product.routes";
+import stockMovementRoutes from "./modules/products/stockMovement.routes";
+import challanRoutes from "./modules/challans/challan.routes";
+import dashboardRoutes from "./modules/dashboard/dashboard.routes";
+import errorHandler from "./middleware/errorHandler";
+
+dotenv.config();
 
 const app = express();
 
 // ── CORS ──────────────────────────────────────────────────────
-// In production, only allow requests from the Vercel frontend.
-// CORS_ORIGIN env var should be set to your Vercel URL e.g.
-//   https://your-app.vercel.app
-// Leave it unset (or set to *) during local development.
-const corsOptions = {
+const corsOptions: cors.CorsOptions = {
     origin: process.env.CORS_ORIGIN || "*",
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
@@ -27,7 +25,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ── Health check ──────────────────────────────────────────────
-app.get("/health", (req, res) => {
+app.get("/health", (_req: Request, res: Response) => {
     res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
@@ -40,11 +38,11 @@ app.use("/challans", challanRoutes);
 app.use("/dashboard", dashboardRoutes);
 
 // ── 404 handler ──────────────────────────────────────────────
-app.use((req, res) => {
+app.use((_req: Request, res: Response) => {
     res.status(404).json({ success: false, message: "Route not found" });
 });
 
 // ── Global error handler ──────────────────────────────────────
-app.use(errorHandler);
+app.use(errorHandler as (err: any, req: Request, res: Response, next: NextFunction) => void);
 
-module.exports = app;
+export default app;

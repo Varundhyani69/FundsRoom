@@ -1,10 +1,10 @@
-const express = require("express");
-const { body } = require("express-validator");
-const { login, getMe, register } = require("./auth.controller");
-const authenticate = require("../../middleware/authenticate");
-const authorize = require("../../middleware/authorize");
+import { Router } from "express";
+import { body } from "express-validator";
+import { login, getMe, register } from "./auth.controller";
+import authenticate from "../../middleware/authenticate";
+import authorize from "../../middleware/authorize";
 
-const router = express.Router();
+const router = Router();
 
 // POST /auth/login
 router.post(
@@ -16,7 +16,7 @@ router.post(
     login
 );
 
-// GET /auth/me  (protected)
+// GET /auth/me
 router.get("/me", authenticate, getMe);
 
 // POST /auth/register  (admin only)
@@ -27,9 +27,7 @@ router.post(
     [
         body("name").trim().notEmpty().withMessage("Name is required"),
         body("email").isEmail().withMessage("Enter a valid email"),
-        body("password")
-            .isLength({ min: 6 })
-            .withMessage("Password must be at least 6 characters"),
+        body("password").isLength({ min: 6 }).withMessage("Password must be at least 6 characters"),
         body("role")
             .optional()
             .isIn(["admin", "sales", "warehouse", "accounts"])
@@ -38,4 +36,4 @@ router.post(
     register
 );
 
-module.exports = router;
+export default router;

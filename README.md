@@ -10,7 +10,7 @@ A full-stack internal operations portal built for a wholesale/distribution compa
 
 | Layer      | Technology                              |
 |------------|-----------------------------------------|
-| Backend    | Node.js 22, Express.js, JavaScript      |
+| Backend    | Node.js 22, Express.js, TypeScript      |
 | Database   | MySQL 8                                 |
 | Auth       | JWT (JSON Web Tokens), bcryptjs         |
 | Frontend   | React 18, JavaScript, CSS Modules       |
@@ -315,7 +315,7 @@ The Login request auto-saves the JWT token to a collection variable, so all subs
 ## Known Limitations & Assumptions
 
 ### JavaScript instead of TypeScript
-The backend is written in JavaScript rather than TypeScript. The core reason is pragmatic — the business logic in this project (DB transactions, stock deduction, role guards) is where the real complexity lies, and JavaScript allowed faster iteration on getting that logic right within the time constraint. The architecture is structured the same way TypeScript would be: separate modules, clear separation of controllers and routes, consistent error handling, and validated inputs on every endpoint using express-validator. Migrating to TypeScript would be a matter of adding type definitions and tsconfig — the structure already supports it.
+The backend was initially prototyped in JavaScript to move fast during development, then fully migrated to TypeScript before submission. All source files in `backend/src` are `.ts` with strict mode enabled, proper typing on all request/response handlers, shared types in `src/types/index.ts`, and the project compiles cleanly with `tsc` with zero errors.
 
 ### PDF export not implemented
 Invoice/challan export as PDF is listed as a bonus feature. The challan detail page includes a fully functional browser print view (Ctrl+P or the Print button) which produces a clean printable layout with proper CSS print styles. A proper server-generated PDF using pdfkit or puppeteer was not implemented within the time available but the endpoint structure (`GET /challans/:id/pdf`) is straightforward to add on top of the existing challan detail API.
