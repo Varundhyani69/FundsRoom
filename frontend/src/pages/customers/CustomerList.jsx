@@ -8,6 +8,8 @@ import styles from "./CustomerList.module.css";
 
 export default function CustomerList() {
     const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const canEdit = ["admin", "sales"].includes(user.role);
     const [customers, setCustomers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [search, setSearch] = useState("");
@@ -48,9 +50,11 @@ export default function CustomerList() {
             <div className={styles.page}>
                 <div className={styles.header}>
                     <h1>Customers</h1>
-                    <button className={styles.addBtn} onClick={() => navigate("/customers/new")}>
-                        + Add Customer
-                    </button>
+                    {canEdit && (
+                        <button className={styles.addBtn} onClick={() => navigate("/customers/new")}>
+                            + Add Customer
+                        </button>
+                    )}
                 </div>
 
                 <div className={styles.filters}>
@@ -114,7 +118,7 @@ export default function CustomerList() {
                                             <td>{c.follow_up_date ? new Date(c.follow_up_date).toLocaleDateString() : "—"}</td>
                                             <td className={styles.actions}>
                                                 <button className={styles.viewBtn} onClick={() => navigate(`/customers/${c.id}`)}>View</button>
-                                                <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>
+                                                {canEdit && <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>}
                                             </td>
                                         </tr>
                                     ))}
@@ -144,7 +148,7 @@ export default function CustomerList() {
                                     </div>
                                     <div className={styles.cardActions}>
                                         <button className={styles.viewBtn} onClick={() => navigate(`/customers/${c.id}`)}>View</button>
-                                        <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>
+                                        {canEdit && <button className={styles.editBtn} onClick={() => navigate(`/customers/${c.id}/edit`)}>Edit</button>}
                                     </div>
                                 </div>
                             ))}
