@@ -1,5 +1,7 @@
 # Mini ERP + CRM Operations Portal
 
+Live Link: https://fundsroom-dos3.onrender.com
+
 A full-stack internal operations portal built for a wholesale/distribution company. Covers customer CRM, product inventory, stock tracking, and sales challan management.
 
 ---
