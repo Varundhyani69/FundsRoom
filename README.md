@@ -1,8 +1,19 @@
 # Mini ERP + CRM Operations Portal
 
+A full-stack internal operations portal built for a wholesale/distribution company. Covers customer CRM, product inventory, stock tracking, and sales challan management.
+
+---
+
 Live Link: https://fundsroom-dos3.onrender.com
 
-A full-stack internal operations portal built for a wholesale/distribution company. Covers customer CRM, product inventory, stock tracking, and sales challan management.
+## Test Credentials
+
+| Role      | Email                | Password       |
+|-----------|----------------------|----------------|
+| Admin     | admin@erp.com        | Admin@123      |
+| Sales     | sales@erp.com        | Sales@123      |
+| Warehouse | warehouse@erp.com    | Warehouse@123  |
+| Accounts  | accounts@erp.com     | Accounts@123   |
 
 ---
 
@@ -126,17 +137,6 @@ Then seed the data:
 ```bash
 docker exec erp_backend node src/db/seed.js
 ```
-
----
-
-## Test Credentials
-
-| Role      | Email                | Password       |
-|-----------|----------------------|----------------|
-| Admin     | admin@erp.com        | Admin@123      |
-| Sales     | sales@erp.com        | Sales@123      |
-| Warehouse | warehouse@erp.com    | Warehouse@123  |
-| Accounts  | accounts@erp.com     | Accounts@123   |
 
 ---
 
